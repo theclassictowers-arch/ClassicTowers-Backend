@@ -1,0 +1,85 @@
+* {
+  box-sizing: border-box;
+  scrollbar-width: thin;
+  scrollbar-color: #999 transparent;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* .gm-style .gm-style-iw-c {
+  background-color: #424242;
+} */
+
+.gm-style .gm-style-iw-d::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+/* Webkit Browsers (Chrome, Edge, Safari) */
+::-webkit-scrollbar {
+  width: 6px; /* Thin scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Light background for contrast */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #eeeeee; /* Custom color */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #eeeeee; /* Darker shade on hover */
+}
+
+.gm-style-iw-chr {
+  /* display: none; */
+}
+
+.MuiBox-root.css-1nx0uwg {
+ padding: 0;
+}
+
+.MuiBox-root.css-c5jrj7 {
+  padding: 0;
+}
+
+.gm-style .gm-style-iw-c {
+  padding: 0;
+}
+
+.gm-style-iw-chr {
+  background-color: #80affa;
+}
+
+.MuiBox-root .css-1tywhkr {
+  background-color: #eeeeee;
+}
+
+div.css-1mxxur6-MuiPaper-root {
+  background-color: #eeeeee;
+}
+
+div.css-1jb0eqx {
+  background-color: #eeeeee;
+  border-radius: 0;
+}
+
+div.css-hpgf8j {
+  border-radius: 0;
+  background-color: #eeeeee;
+}
+
+div.css-tc3bt8 {
+  background-color: #eeeeee;
+}

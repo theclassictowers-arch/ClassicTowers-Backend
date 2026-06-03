@@ -1,0 +1,334 @@
+{
+  "info": {
+    "_postman_id": "e8828ee9-bd8c-45ca-8288-25d612eabd79",
+    "name": "SmartTowerLab",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "39899631"
+  },
+  "item": [
+    {
+      "name": "Development",
+      "item": [
+        {
+          "name": "Auth",
+          "item": [
+            {
+              "name": "Signup",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Sharjeel Faiq\",\n  \"email\": \"sharjeelfaiq@thesmarttowers.com\",\n  \"password\": \"12345678\",\n  \"role\": \"admin\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{dev_url}}/signup",
+                  "host": ["{{dev_url}}"],
+                  "path": ["auth", "signup"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Signin",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"sharjeel@geocellcommunications.com\",\n  \"password\": \"12345678\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{dev_url}}/signin",
+                  "host": ["{{dev_url}}"],
+                  "path": ["auth", "signin"]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Users",
+          "item": [
+            {
+              "name": "Get All",
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{auth_token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{dev_url}}/user/get-all",
+                  "host": ["{{dev_url}}"],
+                  "path": ["user", "get-all"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get By Id",
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{auth_token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{dev_url}}/user/get-by-id/679a256fc0b925e39b097882",
+                  "host": ["{{dev_url}}"],
+                  "path": ["user", "get-by-id", "679a256fc0b925e39b097882"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update By Id",
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{auth_token}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "profilePicture",
+                      "type": "file",
+                      "src": "/C:/Users/A PLUS/Downloads/WhatsApp Image 2025-02-03 at 5.05.05 PM.jpeg"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{dev_url}}/user/update-by-id/679c785420bd9ed16677afab",
+                  "host": ["{{dev_url}}"],
+                  "path": ["user", "update-by-id", "679c785420bd9ed16677afab"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete By Id",
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{auth_token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{dev_url}}/user/delete-by-id/678e46ee66d198e33858c687",
+                  "host": ["{{dev_url}}"],
+                  "path": ["user", "delete-by-id", "678e46ee66d198e33858c687"]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Sensor",
+          "item": [
+            {
+              "name": "Get By Coordinates",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{auth_token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{dev_url}}/sensor/get-by-coordinates?longitude=40.73219726085128&latitude=25.668726402077738",
+                  "host": ["{{dev_url}}"],
+                  "path": ["sensor", "get-by-coordinates"],
+                  "query": [
+                    {
+                      "key": "longitude",
+                      "value": "40.73219726085128"
+                    },
+                    {
+                      "key": "latitude",
+                      "value": "25.668726402077738"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Limits",
+          "item": [
+            {
+              "name": "Update By Id",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{auth_token}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"vibration\": {\n    \"speed\": {\n      \"x\": { \"min\": 0, \"max\": 100 },\n      \"y\": { \"min\": 0, \"max\": 100 },\n      \"z\": { \"min\": 0, \"max\": 100 }\n    },\n    \"displacement\": {\n      \"x\": { \"min\": 0, \"max\": 100 },\n      \"y\": { \"min\": 0, \"max\": 100 },\n      \"z\": { \"min\": 0, \"max\": 100 }\n    },\n    \"amplitude\": {\n      \"x\": { \"min\": 0, \"max\": 100 },\n      \"y\": { \"min\": 0, \"max\": 100 },\n      \"z\": { \"min\": 0, \"max\": 100 }\n    },\n    \"frequency\": {\n      \"x\": { \"min\": 0, \"max\": 100 },\n      \"y\": { \"min\": 0, \"max\": 100 },\n      \"z\": { \"min\": 0, \"max\": 100 }\n    }\n  },\n  \"wind\": {\n    \"speed\": { \"min\": 0, \"max\": 100 },\n    \"direction\": { \"min\": 0, \"max\": 360 },\n    \"humidity\": { \"min\": 0, \"max\": 100 },\n    \"temperature\": { \"min\": -50, \"max\": 50 }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{dev_url}}/limits/update-by-id/676e75d9bcb1e0c0c680c857",
+                  "host": ["{{dev_url}}"],
+                  "path": ["limits", "update-by-id", "676e75d9bcb1e0c0c680c857"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get By Id",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{auth_token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{dev_url}}/limits/get-by-id/6773a23bafe77b5e67a64e97",
+                  "host": ["{{dev_url}}"],
+                  "path": ["limits", "get-by-id", "6773a23bafe77b5e67a64e97"]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Site",
+          "item": [
+            {
+              "name": "Add",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"coordinates\": [\n        48.01483505076601,\n        27.986081769264565\n    ],\n    \"vibrationSensor\": {\n        \"sensorId\": \"VS-c6f7d9bd\",\n        \"speed\": {\n            \"x\": [\n                8.22,\n                7.73,\n                7.32,\n                3.86,\n                5.74,\n                0.59,\n                3.59,\n                2.49,\n                5.79,\n                6.34\n            ],\n            \"y\": [\n                8.03,\n                6.5,\n                8.48,\n                2.42,\n                1.47,\n                8.82,\n                0.78,\n                6.07,\n                4.83,\n                0.89\n            ],\n            \"z\": [\n                8.27,\n                0.82,\n                8.32,\n                8.69,\n                9.26,\n                9.44,\n                4.89,\n                9.53,\n                0.62,\n                9.97\n            ]\n        },\n        \"angle\": {\n            \"x\": [\n                14.34,\n                11.97,\n                13.85,\n                10.95,\n                9.34,\n                11.32,\n                11.08,\n                7.99,\n                5.57,\n                5.29\n            ],\n            \"y\": [\n                11.6,\n                7.24,\n                4.96,\n                9.75,\n                4.59,\n                4.61,\n                6.59,\n                5.11,\n                5.4,\n                2.3\n            ],\n            \"z\": [\n                4.12,\n                2.77,\n                1.78,\n                12.72,\n                0.93,\n                0.9,\n                4.14,\n                12.9,\n                4.68,\n                13.86\n            ]\n        },\n        \"displacement\": {\n            \"x\": [\n                4.47,\n                3.38,\n                0.95,\n                0.68,\n                0.7,\n                1.11,\n                3.75,\n                2.91,\n                4.14,\n                3.29\n            ],\n            \"y\": [\n                3.71,\n                3.51,\n                2.45,\n                3.24,\n                4.04,\n                1.43,\n                3.4,\n                1.4,\n                3.45,\n                3.87\n            ],\n            \"z\": [\n                2.46,\n                3.27,\n                3.96,\n                1.52,\n                2.79,\n                1.39,\n                4.78,\n                1.27,\n                4.98,\n                2.15\n            ]\n        },\n        \"frequency\": {\n            \"x\": [\n                15.02,\n                2.15,\n                17.41,\n                12.01,\n                16.03,\n                7.13,\n                16.46,\n                8.44,\n                19.31,\n                17.08\n            ],\n            \"y\": [\n                4.5,\n                17.19,\n                3.77,\n                9.94,\n                0.95,\n                16.86,\n                4.48,\n                17.44,\n                5.76,\n                8.39\n            ],\n            \"z\": [\n                8.38,\n                9.1,\n                0.38,\n                3.21,\n                12.38,\n                7.33,\n                6,\n                8.29,\n                10.18,\n                5.23\n            ]\n        }\n    },\n    \"windSensor\": {\n        \"sensorId\": \"WS-c6f7d9bd\",\n        \"speed\": [\n            22.04,\n            28.58,\n            27.69,\n            3.66,\n            24.51,\n            11.11,\n            29.6,\n            8.76,\n            23.38,\n            13.13\n        ],\n        \"direction\": [\n            201.15,\n            173.47,\n            136.08,\n            129.33,\n            319.84,\n            161.85,\n            165.6,\n            47.9,\n            284.41,\n            344.56\n        ],\n        \"humidity\": [\n            72.99,\n            70.25,\n            58.96,\n            27.12,\n            71.77,\n            5.24,\n            15.69,\n            73.57,\n            32.57,\n            80.7\n        ],\n        \"temperature\": [\n            20.83,\n            -3.48,\n            -21.01,\n            -17.72,\n            -40.14,\n            -32.38,\n            4.16,\n            22.87,\n            13.81,\n            18.13\n        ]\n    }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{dev_url}}/site/add-site",
+                  "host": ["{{dev_url}}"],
+                  "path": ["site", "add-site"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get All",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{auth_token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{dev_url}}/site/get-all-sites",
+                  "host": ["{{dev_url}}"],
+                  "path": ["site", "get-all-sites"]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "exec": [""]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "exec": [""]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "dev_url",
+      "value": "http://localhost:5000/api/v1",
+      "type": "string"
+    },
+    {
+      "key": "prod_url",
+      "value": "https://api.thesmarttowers.com/api/v1",
+      "type": "string"
+    },
+    {
+      "key": "auth_token",
+      "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjp7Il9pZCI6IjY3Nzc3NThiOTE1ZTM1NzVjMTY1OWM0ZSIsIm5hbWUiOiJTaGFyamVlbCBGYWlxIiwiZW1haWwiOiJzaGFyamVlbGZhaXFAdGhlc21hcnR0b3dlcnMuY29tIiwicGFzc3dvcmQiOiIkMmEkMTAkdUpxMzduLjBzVUYwY1VGdnZraUY2T3poTEowbUdYcDhITDVTZ2U5dlYyUm5GeDhTWmMuVG0iLCJyb2xlIjoiYWRtaW4iLCJpc0FwcHJvdmVkIjpmYWxzZSwiX192IjowfSwiaWF0IjoxNzM1ODgyNDE0LCJleHAiOjE3MzU4ODYwMTR9.NUgPR46CES9nE-V0Xm8hmy7I-_5Sa5wXW-jJ7BrRaLI",
+      "type": "string"
+    }
+  ]
+}

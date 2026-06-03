@@ -1,0 +1,60 @@
+export const styles = {
+  container: {
+    position: "relative",
+    width: "100%",
+    height: "100%",
+    minHeight: 0,
+    overflow: "hidden",
+  },
+  progressLoader: {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    zIndex: 10,
+  },
+  mapContainer: {
+    width: "100%",
+    height: "100%",
+  },
+  infoWindow: {
+    p: 1.2,
+    borderRadius: "8px",
+    width: "230px",
+    minWidth: "180px",
+    bgcolor: "#fff",
+    boxShadow: "0px 2px 6px rgba(0,0,0,0.15)",
+  },
+  title: {
+    fontWeight: 600,
+    textAlign: "center",
+    color: "#222",
+    fontSize: "0.8rem",
+  },
+  divider: {
+    my: 0.6,
+  },
+  statusRow: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    py: 0.2,
+  },
+  statusLabel: {
+    cursor: "pointer",
+    fontWeight: 500,
+    color: "#444",
+    fontSize: "0.75rem",
+  },
+  statusBadge: {
+    px: 1,
+    py: 0.2,
+    textAlign: "center",
+    width: "60px",
+    borderRadius: "6px",
+    color: "#fff",
+    fontSize: "0.65rem",
+    fontWeight: 600,
+    textTransform: "uppercase",
+  },
+};

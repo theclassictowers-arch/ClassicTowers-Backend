@@ -1,0 +1,58 @@
+
+> the-smart-towers-backend@1.0.0 dev
+> nodemon src/index.js
+
+[33m[nodemon] 3.1.10[39m
+[33m[nodemon] to restart at any time, enter `rs`[39m
+[33m[nodemon] watching path(s): src\**\* .env[39m
+[33m[nodemon] watching extensions: js,json[39m
+[32m[nodemon] starting `node ./src/index.js src/index.js`[39m
+[2026-06-01 12:50:00] DEBUG Creating transport: nodemailer (8.0.5; +https://nodemailer.com/; SMTP/8.0.5[client:8.0.5])
+(node:19548) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+[2026-06-01 12:50:01] DEBUG [NXXgeqS8RXU] Resolved smtp.hostinger.com as 172.65.255.143 [cache miss]
+[2026-06-01 12:50:01] INFO  [NXXgeqS8RXU] Connection established to 172.65.255.143:587
+[2026-06-01 12:50:01] DEBUG [NXXgeqS8RXU] S: 220 ESMTP smtp.hostinger.com
+[2026-06-01 12:50:01] DEBUG [NXXgeqS8RXU] C: EHLO [127.0.0.1]
+[2026-06-01 12:50:01] DEBUG [NXXgeqS8RXU] S: 250-smtp.hostinger.com
+[2026-06-01 12:50:01] DEBUG [NXXgeqS8RXU] S: 250-PIPELINING
+[2026-06-01 12:50:01] DEBUG [NXXgeqS8RXU] S: 250-SIZE 48811212
+[2026-06-01 12:50:01] DEBUG [NXXgeqS8RXU] S: 250-ETRN
+[2026-06-01 12:50:01] DEBUG [NXXgeqS8RXU] S: 250-STARTTLS
+[2026-06-01 12:50:01] DEBUG [NXXgeqS8RXU] S: 250-AUTH PLAIN LOGIN
+[2026-06-01 12:50:01] DEBUG [NXXgeqS8RXU] S: 250-ENHANCEDSTATUSCODES
+[2026-06-01 12:50:01] DEBUG [NXXgeqS8RXU] S: 250-8BITMIME
+[2026-06-01 12:50:01] DEBUG [NXXgeqS8RXU] S: 250-DSN
+[2026-06-01 12:50:01] DEBUG [NXXgeqS8RXU] S: 250 CHUNKING
+[2026-06-01 12:50:01] DEBUG [NXXgeqS8RXU] C: STARTTLS
+[2026-06-01 12:50:01] DEBUG [NXXgeqS8RXU] S: 220 2.0.0 Ready to start TLS
+[2026-06-01 12:50:01] INFO  [NXXgeqS8RXU] Connection upgraded with STARTTLS
+[2026-06-01 12:50:01] DEBUG [NXXgeqS8RXU] C: EHLO [127.0.0.1]
+[2026-06-01 12:50:02] DEBUG [NXXgeqS8RXU] S: 250-smtp.hostinger.com
+[2026-06-01 12:50:02] DEBUG [NXXgeqS8RXU] S: 250-PIPELINING
+[2026-06-01 12:50:02] DEBUG [NXXgeqS8RXU] S: 250-SIZE 48811212
+[2026-06-01 12:50:02] DEBUG [NXXgeqS8RXU] S: 250-ETRN
+[2026-06-01 12:50:02] DEBUG [NXXgeqS8RXU] S: 250-AUTH PLAIN LOGIN
+[2026-06-01 12:50:02] DEBUG [NXXgeqS8RXU] S: 250-ENHANCEDSTATUSCODES
+[2026-06-01 12:50:02] DEBUG [NXXgeqS8RXU] S: 250-8BITMIME
+[2026-06-01 12:50:02] DEBUG [NXXgeqS8RXU] S: 250-DSN
+[2026-06-01 12:50:02] DEBUG [NXXgeqS8RXU] S: 250 CHUNKING
+[2026-06-01 12:50:02] DEBUG [NXXgeqS8RXU] SMTP handshake finished
+[2026-06-01 12:50:02] DEBUG [NXXgeqS8RXU] C: AUTH PLAIN AGJvc3NAdGhlY2xhc3NpY3Rvd2Vycy5jb20ALyogc2VjcmV0ICov
+[2026-06-01 12:50:02] DEBUG [NXXgeqS8RXU] S: 235 2.7.0 Authentication successful
+[2026-06-01 12:50:02] INFO  [NXXgeqS8RXU] User "boss@theclassictowers.com" authenticated
+[2026-06-01 12:50:02] DEBUG [NXXgeqS8RXU] C: QUIT
+[2026-06-01 12:50:02] DEBUG [NXXgeqS8RXU] S: 221 2.0.0 Bye
+[2026-06-01 12:50:02] DEBUG [NXXgeqS8RXU] Closing connection to the server using "end"
+[0mGET / [32m200[0m 3.816 ms - 34[0m
+[0mPOST /api/v1/signin [32m200[0m 108.646 ms - 374[0m
+[0mGET / [32m200[0m 0.567 ms - 34[0m
+[0mGET /favicon.ico [33m404[0m 1.019 ms - 32[0m
+[0mOPTIONS /api/v1/signin [32m204[0m 0.321 ms - 0[0m
+2026-06-01 05:50:53 [[31merror[39m]: {
+  "success": false,
+  "status": 401,
+  "message": "Invalid email or password.",
+  "stack": "UnauthorizedError: Invalid email or password.\n    at Object.signIn (file:///C:/Users/Classic1/Projects/TheClassicTowers/Backend/src/modules/auth/auth.services.js:397:13)\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async file:///C:/Users/Classic1/Projects/TheClassicTowers/Backend/src/modules/auth/auth.controllers.js:32:20\n    at async file:///C:/Users/Classic1/Projects/TheClassicTowers/Backend/src/utils/global.utils.js:3:5"
+}
+[0mPOST /api/v1/signin [33m401[0m 9.400 ms - 555[0m

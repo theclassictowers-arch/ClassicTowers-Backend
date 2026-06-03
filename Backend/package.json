@@ -1,0 +1,58 @@
+{
+  "name": "the-smart-towers-backend",
+  "version": "1.0.0",
+  "type": "module",
+  "license": "ISC",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "nodemon src/index.js",
+    "start": "node src/index.js",
+    "seed:trends": "node src/scripts/seed-trend-data.js",
+    "format": "prettier --write \"./**/*.{js,jsx,html,yaml,env,md,json}\"",
+    "lint": "eslint \"./**/*.js\""
+  },
+  "devDependencies": {
+    "colors": "^1.4.0",
+    "eslint": "^9.20.0",
+    "morgan": "^1.10.0",
+    "nodemon": "^3.1.9",
+    "prettier": "^3.5.0"
+  },
+  "dependencies": {
+    "@casl/ability": "^6.7.3",
+    "axios": "^1.7.9",
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "date-fns": "^4.1.0",
+    "date-fns-tz": "^3.2.0",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "http-errors": "^2.0.0",
+    "joi": "^17.13.3",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^9.0.0",
+    "multer": "^1.4.5-lts.1",
+    "node-cron": "^3.0.3",
+    "nodemailer": "^8.0.5",
+    "redis": "^4.7.0",
+    "redis-server": "^1.2.2",
+    "socket.io": "^4.8.1",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
+    "winston": "^3.17.0"
+  },
+  "imports": {
+    "#config/*": "./src/config/*",
+    "#constants/*": "./src/constants/*",
+    "#dataAccess/*": "./src/data-access/*",
+    "#dtos/*": "./src/dtos/*",
+    "#helpers/*": "./src/helpers/*",
+    "#middleware/*": "./src/middleware/*",
+    "#models/*": "./src/models/*",
+    "#modules/*": "./src/modules/*",
+    "#routes/*": "./src/routes/*",
+    "#server/*": "./src/server/*",
+    "#utils/*": "./src/utils/*"
+  }
+}
