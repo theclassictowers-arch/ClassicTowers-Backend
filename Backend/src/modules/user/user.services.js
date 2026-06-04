@@ -17,6 +17,10 @@ const DEFAULT_DASHBOARD_THEME = {
 const DEFAULT_DASHBOARD_BRANDING = {
   logoText: "The Classic Towers",
   logoIcon: null,
+  logoIconEnabled: true,
+  logoTextEnabled: true,
+  logoTextSize: 16,
+  logoTextWidth: 145,
 };
 
 const __filename = fileURLToPath(import.meta.url);
@@ -98,6 +102,20 @@ const normalizeDashboardBranding = (dashboardBranding) => {
   return {
     logoText,
     logoIcon: dashboardBranding?.logoIcon || null,
+    logoIconEnabled: dashboardBranding?.logoIconEnabled !== false,
+    logoTextEnabled: dashboardBranding?.logoTextEnabled !== false,
+    logoTextSize:
+      Number.isFinite(Number(dashboardBranding?.logoTextSize)) &&
+      Number(dashboardBranding.logoTextSize) >= 10 &&
+      Number(dashboardBranding.logoTextSize) <= 32
+        ? Number(dashboardBranding.logoTextSize)
+        : DEFAULT_DASHBOARD_BRANDING.logoTextSize,
+    logoTextWidth:
+      Number.isFinite(Number(dashboardBranding?.logoTextWidth)) &&
+      Number(dashboardBranding.logoTextWidth) >= 60 &&
+      Number(dashboardBranding.logoTextWidth) <= 180
+        ? Number(dashboardBranding.logoTextWidth)
+        : DEFAULT_DASHBOARD_BRANDING.logoTextWidth,
   };
 };
 

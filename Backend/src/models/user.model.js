@@ -57,6 +57,26 @@ const dashboardBrandingSchema = new Schema(
       type: String,
       default: null,
     },
+    logoIconEnabled: {
+      type: Boolean,
+      default: true,
+    },
+    logoTextEnabled: {
+      type: Boolean,
+      default: true,
+    },
+    logoTextSize: {
+      type: Number,
+      min: 10,
+      max: 32,
+      default: 16,
+    },
+    logoTextWidth: {
+      type: Number,
+      min: 60,
+      max: 180,
+      default: 145,
+    },
   },
   { _id: false },
 );
