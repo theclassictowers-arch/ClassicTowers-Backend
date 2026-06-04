@@ -28,6 +28,7 @@ const DEFAULT_DASHBOARD_BRANDING = {
   logoTextSize: 16,
   logoTextWidth: 145,
   sidebarWidth: 240,
+  sidebarHeight: 100,
 };
 
 const toValidMapOpeningLocation = (mapOpeningLocation) => {
@@ -182,6 +183,12 @@ const resolveDashboardBranding = async (user) => {
       Number(branding.sidebarWidth) <= 360
         ? Number(branding.sidebarWidth)
         : DEFAULT_DASHBOARD_BRANDING.sidebarWidth,
+    sidebarHeight:
+      Number.isFinite(Number(branding?.sidebarHeight)) &&
+      Number(branding.sidebarHeight) >= 40 &&
+      Number(branding.sidebarHeight) <= 100
+        ? Number(branding.sidebarHeight)
+        : DEFAULT_DASHBOARD_BRANDING.sidebarHeight,
   });
   if (!user) return { ...DEFAULT_DASHBOARD_BRANDING };
   if (user.role === ROLES.ADMIN || user.role === ROLES.ORGANIZATION) {
