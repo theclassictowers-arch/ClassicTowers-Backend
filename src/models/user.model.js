@@ -77,6 +77,12 @@ const dashboardBrandingSchema = new Schema(
       max: 180,
       default: 145,
     },
+    sidebarWidth: {
+      type: Number,
+      min: 200,
+      max: 360,
+      default: 240,
+    },
   },
   { _id: false },
 );

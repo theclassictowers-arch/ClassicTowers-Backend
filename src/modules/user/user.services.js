@@ -21,6 +21,7 @@ const DEFAULT_DASHBOARD_BRANDING = {
   logoTextEnabled: true,
   logoTextSize: 16,
   logoTextWidth: 145,
+  sidebarWidth: 240,
 };
 
 const __filename = fileURLToPath(import.meta.url);
@@ -116,6 +117,12 @@ const normalizeDashboardBranding = (dashboardBranding) => {
       Number(dashboardBranding.logoTextWidth) <= 180
         ? Number(dashboardBranding.logoTextWidth)
         : DEFAULT_DASHBOARD_BRANDING.logoTextWidth,
+    sidebarWidth:
+      Number.isFinite(Number(dashboardBranding?.sidebarWidth)) &&
+      Number(dashboardBranding.sidebarWidth) >= 200 &&
+      Number(dashboardBranding.sidebarWidth) <= 360
+        ? Number(dashboardBranding.sidebarWidth)
+        : DEFAULT_DASHBOARD_BRANDING.sidebarWidth,
   };
 };
 

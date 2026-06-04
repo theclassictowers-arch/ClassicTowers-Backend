@@ -35,6 +35,9 @@ const userController = {
       if (userData.logoTextWidth !== undefined) {
         brandingData.logoTextWidth = Number(userData.logoTextWidth);
       }
+      if (userData.sidebarWidth !== undefined) {
+        brandingData.sidebarWidth = Number(userData.sidebarWidth);
+      }
       if (req.files?.logoIcon) {
         brandingData.logoIcon = `/uploads/${req.files.logoIcon[0].filename}`;
       }
@@ -81,6 +84,9 @@ const userController = {
     }
     if (req.body.logoTextWidth !== undefined) {
       brandingData.logoTextWidth = Number(req.body.logoTextWidth);
+    }
+    if (req.body.sidebarWidth !== undefined) {
+      brandingData.sidebarWidth = Number(req.body.sidebarWidth);
     }
     if (req.files?.logoIcon) {
       brandingData.logoIcon = `/uploads/${req.files.logoIcon[0].filename}`;
