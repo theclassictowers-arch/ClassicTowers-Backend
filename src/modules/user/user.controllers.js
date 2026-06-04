@@ -43,6 +43,18 @@ const userController = {
   updateDashboardBranding: asyncHandler(async function (req, res) {
     const { userId } = req.params;
     const brandingData = { logoText: req.body.logoText };
+    if (req.body.logoIconEnabled !== undefined) {
+      brandingData.logoIconEnabled = req.body.logoIconEnabled !== "false";
+    }
+    if (req.body.logoTextEnabled !== undefined) {
+      brandingData.logoTextEnabled = req.body.logoTextEnabled !== "false";
+    }
+    if (req.body.logoTextSize !== undefined) {
+      brandingData.logoTextSize = Number(req.body.logoTextSize);
+    }
+    if (req.body.logoTextWidth !== undefined) {
+      brandingData.logoTextWidth = Number(req.body.logoTextWidth);
+    }
     if (req.files?.logoIcon) {
       brandingData.logoIcon = `/uploads/${req.files.logoIcon[0].filename}`;
     }

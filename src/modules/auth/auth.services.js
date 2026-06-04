@@ -23,6 +23,10 @@ const DEFAULT_DASHBOARD_THEME = {
 const DEFAULT_DASHBOARD_BRANDING = {
   logoText: "The Classic Towers",
   logoIcon: null,
+  logoIconEnabled: true,
+  logoTextEnabled: true,
+  logoTextSize: 16,
+  logoTextWidth: 145,
 };
 
 const toValidMapOpeningLocation = (mapOpeningLocation) => {
@@ -157,6 +161,20 @@ const resolveDashboardBranding = async (user) => {
       branding?.logoText || DEFAULT_DASHBOARD_BRANDING.logoText
     ).trim(),
     logoIcon: branding?.logoIcon || null,
+    logoIconEnabled: branding?.logoIconEnabled !== false,
+    logoTextEnabled: branding?.logoTextEnabled !== false,
+    logoTextSize:
+      Number.isFinite(Number(branding?.logoTextSize)) &&
+      Number(branding.logoTextSize) >= 10 &&
+      Number(branding.logoTextSize) <= 32
+        ? Number(branding.logoTextSize)
+        : DEFAULT_DASHBOARD_BRANDING.logoTextSize,
+    logoTextWidth:
+      Number.isFinite(Number(branding?.logoTextWidth)) &&
+      Number(branding.logoTextWidth) >= 60 &&
+      Number(branding.logoTextWidth) <= 180
+        ? Number(branding.logoTextWidth)
+        : DEFAULT_DASHBOARD_BRANDING.logoTextWidth,
   });
   if (!user) return { ...DEFAULT_DASHBOARD_BRANDING };
   if (user.role === ROLES.ADMIN || user.role === ROLES.ORGANIZATION) {
