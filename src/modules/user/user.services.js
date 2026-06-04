@@ -14,6 +14,10 @@ const DEFAULT_DASHBOARD_THEME = {
   backgroundColor: "#f5f7fb",
   textColor: "#0f172a",
 };
+const DEFAULT_DASHBOARD_BRANDING = {
+  logoText: "The Classic Towers",
+  logoIcon: null,
+};
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -84,6 +88,19 @@ const normalizeDashboardTheme = (dashboardTheme) => {
   return { primaryColor, backgroundColor, textColor };
 };
 
+const normalizeDashboardBranding = (dashboardBranding) => {
+  const logoText = String(
+    dashboardBranding?.logoText || DEFAULT_DASHBOARD_BRANDING.logoText
+  ).trim();
+  if (!logoText || logoText.length > 60) {
+    return null;
+  }
+  return {
+    logoText,
+    logoIcon: dashboardBranding?.logoIcon || null,
+  };
+};
+
 const resolveUserMapOpeningLocation = async (user) => {
   if (!user || user.role === ROLES.ADMIN) {
     return null;
@@ -124,6 +141,24 @@ const resolveUserDashboardTheme = async (user) => {
   }
 
   return { ...DEFAULT_DASHBOARD_THEME };
+};
+
+const resolveUserDashboardBranding = async (user) => {
+  if (!user) return { ...DEFAULT_DASHBOARD_BRANDING };
+  if (user.role === ROLES.ADMIN || user.role === ROLES.ORGANIZATION) {
+    return normalizeDashboardBranding(user.dashboardBranding) || {
+      ...DEFAULT_DASHBOARD_BRANDING,
+    };
+  }
+  if (user.organization) {
+    const organization = await read.userById(user.organization);
+    if (organization?.role === ROLES.ORGANIZATION) {
+      return normalizeDashboardBranding(organization.dashboardBranding) || {
+        ...DEFAULT_DASHBOARD_BRANDING,
+      };
+    }
+  }
+  return { ...DEFAULT_DASHBOARD_BRANDING };
 };
 
 const userService = {
@@ -176,6 +211,7 @@ const userService = {
 
     const mapOpeningLocation = await resolveUserMapOpeningLocation(user);
     const dashboardTheme = await resolveUserDashboardTheme(user);
+    const dashboardBranding = await resolveUserDashboardBranding(user);
     const serializedUser =
       typeof user.toObject === "function" ? user.toObject() : user;
 
@@ -183,6 +219,7 @@ const userService = {
       ...serializedUser,
       mapOpeningLocation,
       dashboardTheme,
+      dashboardBranding,
     };
   },
 
@@ -251,6 +288,57 @@ const userService = {
     };
   },
 
+  updateDashboardBranding: async function (currentUser, userId, brandingData = {}) {
+    const actor = await read.userById(currentUser.id);
+    const targetUser = await read.userById(userId);
+    if (!actor || !targetUser) {
+      throw createError(404, "Target user not found");
+    }
+    if (
+      actor.role !== ROLES.ADMIN &&
+      !(
+        actor.role === ROLES.ORGANIZATION &&
+        String(actor._id) === String(targetUser._id)
+      )
+    ) {
+      throw createError(403, "You are not authorized to update dashboard branding.");
+    }
+    if (
+      targetUser.role !== ROLES.ADMIN &&
+      targetUser.role !== ROLES.ORGANIZATION
+    ) {
+      throw createError(403, "Branding can only be set for admin or organization accounts.");
+    }
+
+    const dashboardBranding = normalizeDashboardBranding({
+      ...normalizeDashboardBranding(targetUser.dashboardBranding),
+      ...brandingData,
+    });
+    if (!dashboardBranding) {
+      throw createError(400, "Logo text is required and cannot exceed 60 characters.");
+    }
+
+    if (
+      brandingData.logoIcon &&
+      targetUser.dashboardBranding?.logoIcon
+    ) {
+      deleteFile(
+        path.join(
+          __dirname,
+          "../../../public",
+          targetUser.dashboardBranding.logoIcon
+        )
+      );
+    }
+
+    await update.userById(userId, { dashboardBranding });
+    return {
+      userId,
+      dashboardBranding,
+      message: "Dashboard branding updated successfully",
+    };
+  },
+
   partialUpdateUserById: async function (userId, userData) {
     const existingUser = await read.userById(userId);
     if (!existingUser) {
@@ -260,6 +348,9 @@ const userService = {
     // Dashboard theme is managed via dedicated endpoint with role checks.
     if (Object.prototype.hasOwnProperty.call(userData, "dashboardTheme")) {
       delete userData.dashboardTheme;
+    }
+    if (Object.prototype.hasOwnProperty.call(userData, "dashboardBranding")) {
+      delete userData.dashboardBranding;
     }
 
     if (userData.profilePicture && existingUser.profilePicture) {

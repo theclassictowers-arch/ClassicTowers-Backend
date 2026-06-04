@@ -45,6 +45,21 @@ const dashboardThemeSchema = new Schema(
   },
   { _id: false },
 );
+const dashboardBrandingSchema = new Schema(
+  {
+    logoText: {
+      type: String,
+      trim: true,
+      maxlength: 60,
+      default: "The Classic Towers",
+    },
+    logoIcon: {
+      type: String,
+      default: null,
+    },
+  },
+  { _id: false },
+);
 
 const UserSchema = new Schema(
   {
@@ -124,6 +139,10 @@ const UserSchema = new Schema(
     },
     dashboardTheme: {
       type: dashboardThemeSchema,
+      default: null,
+    },
+    dashboardBranding: {
+      type: dashboardBrandingSchema,
       default: null,
     },
     operatorTowerDetails: {

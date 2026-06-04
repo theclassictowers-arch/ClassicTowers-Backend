@@ -14,6 +14,12 @@ userRoutes
     verifyAuthRole(ROLES.ADMIN, ROLES.ORGANIZATION),
     userController.updateDashboardTheme
   )
+  .patch(
+    "/:userId/dashboard-branding",
+    verifyAuthRole(ROLES.ADMIN, ROLES.ORGANIZATION),
+    uploadFiles,
+    userController.updateDashboardBranding
+  )
   .get("/:userId", userController.getById)
   .patch("/:userId", uploadFiles, userController.partialUpdateUserById)
   .delete("/:userId", verifyAuthRole("admin"), userController.deleteById);
