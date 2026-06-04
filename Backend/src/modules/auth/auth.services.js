@@ -20,6 +20,10 @@ const DEFAULT_DASHBOARD_THEME = {
   backgroundColor: "#f5f7fb",
   textColor: "#0f172a",
 };
+const DEFAULT_DASHBOARD_BRANDING = {
+  logoText: "The Classic Towers",
+  logoIcon: null,
+};
 
 const toValidMapOpeningLocation = (mapOpeningLocation) => {
   if (!mapOpeningLocation || typeof mapOpeningLocation !== "object") {
@@ -145,6 +149,26 @@ const resolveDashboardTheme = async (user) => {
   }
 
   return { ...DEFAULT_DASHBOARD_THEME };
+};
+
+const resolveDashboardBranding = async (user) => {
+  const normalize = (branding) => ({
+    logoText: String(
+      branding?.logoText || DEFAULT_DASHBOARD_BRANDING.logoText
+    ).trim(),
+    logoIcon: branding?.logoIcon || null,
+  });
+  if (!user) return { ...DEFAULT_DASHBOARD_BRANDING };
+  if (user.role === ROLES.ADMIN || user.role === ROLES.ORGANIZATION) {
+    return normalize(user.dashboardBranding);
+  }
+  if (user.organization) {
+    const organization = await read.userById(user.organization);
+    if (organization?.role === ROLES.ORGANIZATION) {
+      return normalize(organization.dashboardBranding);
+    }
+  }
+  return { ...DEFAULT_DASHBOARD_BRANDING };
 };
 
 const authService = {
@@ -414,6 +438,7 @@ const authService = {
 
     const mapOpeningLocation = await resolveMapOpeningLocation(existingUser);
     const dashboardTheme = await resolveDashboardTheme(existingUser);
+    const dashboardBranding = await resolveDashboardBranding(existingUser);
 
     const result = {
       userId: existingUser._id,
@@ -421,6 +446,7 @@ const authService = {
       token,
       mapOpeningLocation,
       dashboardTheme,
+      dashboardBranding,
     };
 
     return result;

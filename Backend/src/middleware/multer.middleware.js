@@ -37,6 +37,9 @@ const upload = multer({
   fileFilter,
 });
 
-const uploadFiles = upload.fields([{ name: "profilePicture", maxCount: 1 }]);
+const uploadFiles = upload.fields([
+  { name: "profilePicture", maxCount: 1 },
+  { name: "logoIcon", maxCount: 1 },
+]);
 
 export { uploadFiles };

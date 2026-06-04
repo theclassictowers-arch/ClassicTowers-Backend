@@ -40,6 +40,20 @@ const userController = {
     res.status(200).json(result);
   }),
 
+  updateDashboardBranding: asyncHandler(async function (req, res) {
+    const { userId } = req.params;
+    const brandingData = { logoText: req.body.logoText };
+    if (req.files?.logoIcon) {
+      brandingData.logoIcon = `/uploads/${req.files.logoIcon[0].filename}`;
+    }
+    const result = await userService.updateDashboardBranding(
+      req.user,
+      userId,
+      brandingData
+    );
+    res.status(200).json(result);
+  }),
+
   deleteById: asyncHandler(async function (req, res) {
     const { userId } = req.params;
     const result = await userService.deleteById(userId);
