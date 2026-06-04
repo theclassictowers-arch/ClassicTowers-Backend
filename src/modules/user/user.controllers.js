@@ -21,6 +21,33 @@ const userController = {
     const { userId } = req.params;
     const userData = req.body;
 
+    if (userData.dashboardBrandingUpdate === "true") {
+      const brandingData = { logoText: userData.logoText };
+      if (userData.logoIconEnabled !== undefined) {
+        brandingData.logoIconEnabled = userData.logoIconEnabled !== "false";
+      }
+      if (userData.logoTextEnabled !== undefined) {
+        brandingData.logoTextEnabled = userData.logoTextEnabled !== "false";
+      }
+      if (userData.logoTextSize !== undefined) {
+        brandingData.logoTextSize = Number(userData.logoTextSize);
+      }
+      if (userData.logoTextWidth !== undefined) {
+        brandingData.logoTextWidth = Number(userData.logoTextWidth);
+      }
+      if (req.files?.logoIcon) {
+        brandingData.logoIcon = `/uploads/${req.files.logoIcon[0].filename}`;
+      }
+
+      const result = await userService.updateDashboardBranding(
+        req.user,
+        userId,
+        brandingData
+      );
+      res.status(200).json(result);
+      return;
+    }
+
     if (req.files && req.files.profilePicture) {
       const file = req.files.profilePicture[0];
       userData.profilePicture = `/uploads/${file.filename}`;
