@@ -25,7 +25,7 @@ const DEFAULT_DASHBOARD_BRANDING = {
   logoIcon: null,
   logoIconEnabled: true,
   logoTextEnabled: true,
-  logoTextSize: 16,
+  logoTextSize: 12,
   logoTextWidth: 145,
   sidebarWidth: 240,
   sidebarHeight: 100,
@@ -167,8 +167,8 @@ const resolveDashboardBranding = async (user) => {
     logoTextEnabled: branding?.logoTextEnabled !== false,
     logoTextSize:
       Number.isFinite(Number(branding?.logoTextSize)) &&
-      Number(branding.logoTextSize) >= 10 &&
-      Number(branding.logoTextSize) <= 32
+      Number(branding.logoTextSize) >= 8 &&
+      Number(branding.logoTextSize) <= 16
         ? Number(branding.logoTextSize)
         : DEFAULT_DASHBOARD_BRANDING.logoTextSize,
     logoTextWidth:

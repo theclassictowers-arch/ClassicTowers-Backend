@@ -19,7 +19,7 @@ const DEFAULT_DASHBOARD_BRANDING = {
   logoIcon: null,
   logoIconEnabled: true,
   logoTextEnabled: true,
-  logoTextSize: 16,
+  logoTextSize: 12,
   logoTextWidth: 145,
   sidebarWidth: 240,
   sidebarHeight: 100,
@@ -108,8 +108,8 @@ const normalizeDashboardBranding = (dashboardBranding) => {
     logoTextEnabled: dashboardBranding?.logoTextEnabled !== false,
     logoTextSize:
       Number.isFinite(Number(dashboardBranding?.logoTextSize)) &&
-      Number(dashboardBranding.logoTextSize) >= 10 &&
-      Number(dashboardBranding.logoTextSize) <= 32
+      Number(dashboardBranding.logoTextSize) >= 8 &&
+      Number(dashboardBranding.logoTextSize) <= 16
         ? Number(dashboardBranding.logoTextSize)
         : DEFAULT_DASHBOARD_BRANDING.logoTextSize,
     logoTextWidth:

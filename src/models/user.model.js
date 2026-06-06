@@ -67,9 +67,9 @@ const dashboardBrandingSchema = new Schema(
     },
     logoTextSize: {
       type: Number,
-      min: 10,
-      max: 32,
-      default: 16,
+      min: 8,
+      max: 16,
+      default: 12,
     },
     logoTextWidth: {
       type: Number,
