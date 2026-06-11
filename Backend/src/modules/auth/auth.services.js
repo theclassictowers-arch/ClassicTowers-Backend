@@ -3,7 +3,6 @@ import createError from "http-errors";
 import {
   decodeToken,
   generateToken,
-  sendVerificationEmail,
   sendResetPasswordEmail,
   sendAccountApprovalEmail,
 } from "#utils/index.js";
@@ -392,16 +391,16 @@ const authService = {
       }
     }
 
-    // If the role is admin or organization, create account directly without approval
-    if (role === ROLES.ADMIN || role === ROLES.ORGANIZATION) {
+    // Only admin accounts are created directly; all other users approve by email first
+    if (role === ROLES.ADMIN) {
       const newUser = await save.user(userData);
       if (!newUser) {
         throw createError(500, "Failed to create a new user.");
       }
-      return role === ROLES.ADMIN ? "Admin registered successfully" : "Organization registered successfully";
+      return "Admin registered successfully";
     }
 
-    // For Team Lead and Operator, create pending user and send approval email
+    // Create pending user and send approval email
     // Generate unique approval token
     const approvalToken = crypto.randomBytes(32).toString("hex");
     const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
@@ -610,8 +609,8 @@ const authService = {
         email: pendingUserDoc.email,
         password: pendingUserDoc.password,
         role: pendingUserDoc.role,
-        isEmailVerified: pendingUserDoc.isEmailVerified,
-        isApproved: pendingUserDoc.isApproved,
+        isEmailVerified: true,
+        isApproved: true,
         organization: pendingUserDoc.organization,
         teamLead: pendingUserDoc.teamLead,
         assignedTowerLimit: pendingUserDoc.assignedTowerLimit || 0,
@@ -634,11 +633,6 @@ const authService = {
       // Delete pending user after successful account creation
       await remove.pendingUserByToken(approvalToken);
 
-      // Send welcome/verification email
-      const verificationToken = generateToken(newUser._id);
-      if (verificationToken) {
-        await sendVerificationEmail(pendingUserDoc.email, verificationToken);
-      }
 
       return "Account approved and created successfully. You can now login.";
     }
@@ -648,3 +642,4 @@ const authService = {
 };
 
 export default authService;
+
