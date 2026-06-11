@@ -5,6 +5,8 @@ import {
   generateToken,
   sendResetPasswordEmail,
   sendAccountApprovalEmail,
+  sendAccountApprovedUserEmail,
+  sendAccountApprovedCreatorEmail,
 } from "#utils/index.js";
 import { logger } from "#config/index.js";
 import { dataAccess } from "#dataAccess/index.js";
@@ -633,6 +635,34 @@ const authService = {
       // Delete pending user after successful account creation
       await remove.pendingUserByToken(approvalToken);
 
+      const creator = pendingUserDoc.createdBy
+        ? await read.userById(pendingUserDoc.createdBy)
+        : null;
+
+      try {
+        await Promise.all([
+          sendAccountApprovedUserEmail(
+            pendingUserDoc.email,
+            pendingUserDoc.name,
+            pendingUserDoc.role,
+          ),
+          creator?.email
+            ? sendAccountApprovedCreatorEmail(
+                creator.email,
+                creator.name,
+                pendingUserDoc.name,
+                pendingUserDoc.email,
+                pendingUserDoc.role,
+              )
+            : Promise.resolve(false),
+        ]);
+      } catch (emailError) {
+        logger.error(
+          `Account approval notification email error: ${
+            emailError instanceof Error ? emailError.message : String(emailError)
+          }`,
+        );
+      }
 
       return "Account approved and created successfully. You can now login.";
     }
