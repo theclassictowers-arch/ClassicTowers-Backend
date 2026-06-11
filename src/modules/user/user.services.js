@@ -6,6 +6,7 @@ import { deleteFile } from "#utils/index.js";
 import { dataAccess } from "#dataAccess/index.js";
 import { ROLES } from "#constants/index.js";
 import { LeadSite } from "#models/lead-sites.model.js";
+import { PendingUser } from "#models/index.js";
 
 const { read, update, remove, find } = dataAccess;
 const DEFAULT_ORGANIZATION_MAP_ZOOM = 4.8;
@@ -193,9 +194,39 @@ const resolveUserDashboardBranding = async (user) => {
   return { ...DEFAULT_DASHBOARD_BRANDING };
 };
 
+const serializeApprovedUser = (user) => {
+  const serializedUser =
+    typeof user.toObject === "function" ? user.toObject() : user;
+
+  return {
+    ...serializedUser,
+    approvalStatus: serializedUser.isApproved ? "approved" : "not_approved",
+    accountSource: "user",
+  };
+};
+
+const serializePendingUser = (pendingUser) => {
+  const serializedUser =
+    typeof pendingUser.toObject === "function" ? pendingUser.toObject() : pendingUser;
+
+  const safePendingUser = { ...serializedUser };
+  delete safePendingUser.password;
+  delete safePendingUser.approvalToken;
+
+  return {
+    ...safePendingUser,
+    _id: `pending-${safePendingUser._id}`,
+    originalPendingUserId: safePendingUser._id,
+    isApproved: false,
+    approvalStatus: "pending",
+    accountSource: "pending_user",
+  };
+};
+
 const userService = {
   getAll: async function (currentUser, queryParams = {}) {
     let users = [];
+    let pendingUsers = [];
     const { role: filterRole, organization: filterOrganization } = queryParams;
 
     const user = await read.userById(currentUser.id);
@@ -218,22 +249,34 @@ const userService = {
       switch (user.role) {
         case ROLES.ADMIN:
           users = await read.allUsers();
+          pendingUsers = await PendingUser.find().sort({ createdAt: -1 });
           break;
         case ROLES.ORGANIZATION:
           // Organization apne team leads aur operators dekh sakta hai
           users = await find.many({ organization: user._id });
+          pendingUsers = await PendingUser.find({
+            $or: [
+              { createdBy: user._id },
+              { organization: user._id },
+            ],
+          }).sort({ createdAt: -1 });
           break;
         case ROLES.TEAM_LEAD:
           users = await find.many({ teamLead: user._id });
+          pendingUsers = await PendingUser.find({
+            $or: [
+              { createdBy: user._id },
+              { teamLead: user._id },
+            ],
+          }).sort({ createdAt: -1 });
           break;
       }
     }
 
-    if (!users.length) {
-      throw createError(404, "Users not found");
-    }
-
-    return users;
+    return [
+      ...pendingUsers.map(serializePendingUser),
+      ...users.map(serializeApprovedUser),
+    ];
   },
   getById: async function (userId) {
     const user = await read.userById(userId);
@@ -421,6 +464,10 @@ const userService = {
     const user = await remove.userById(userId);
     if (!user) {
       throw createError(404, "User not found");
+    }
+
+    if (user.email) {
+      await remove.pendingUserByEmail(user.email);
     }
 
     return "User deleted successfully";
