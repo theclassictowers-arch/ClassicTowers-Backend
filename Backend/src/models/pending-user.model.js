@@ -72,6 +72,10 @@ const PendingUserSchema = new Schema(
       picture: { type: String, default: "" },
       details: { type: String, default: "" },
     },
+    loginUrl: {
+      type: String,
+      default: null,
+    },
     approvalToken: {
       type: String,
       required: true,

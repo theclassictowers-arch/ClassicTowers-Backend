@@ -221,6 +221,7 @@ const authService = {
     mapOpeningLocation,
     dashboardTheme,
     operatorTowerDetails,
+    loginUrl,
   }, currentUser) {
     const existingUser = await read.userByEmail(email);
     if (existingUser) {
@@ -410,6 +411,7 @@ const authService = {
     // Create pending user data
     const pendingUserData = {
       ...userData,
+      loginUrl,
       approvalToken,
       expiresAt,
       createdBy: creator._id,
@@ -645,6 +647,7 @@ const authService = {
             pendingUserDoc.email,
             pendingUserDoc.name,
             pendingUserDoc.role,
+            pendingUserDoc.loginUrl,
           ),
           creator?.email
             ? sendAccountApprovedCreatorEmail(

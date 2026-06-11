@@ -161,6 +161,9 @@ const signUpDto = Joi.object({
     }),
     details: Joi.string().allow("").optional(),
   }).optional(),
+  loginUrl: Joi.string().uri({ scheme: ["http", "https"] }).optional().messages({
+    "string.uri": "Login URL must be a valid URL",
+  }),
 });
 
 const signInDto = Joi.object({

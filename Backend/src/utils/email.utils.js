@@ -4,7 +4,7 @@ import { fileURLToPath } from "url";
 
 import { logger, env, transporter } from "#config/index.js";
 
-const { NODE_ENV, USER_EMAIL } = env;
+const { NODE_ENV, USER_EMAIL, FRONTEND_URL } = env;
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -63,6 +63,20 @@ const sendVerificationNotification = () => {
   return readEmailTemplate("verification-notification", "index.html");
 };
 
+const getLoginUrl = (loginUrl) => {
+  if (typeof loginUrl === "string" && /^https?:\/\//.test(loginUrl)) {
+    return loginUrl;
+  }
+
+  const frontendUrl =
+    FRONTEND_URL?.trim() ||
+    (NODE_ENV === "production"
+      ? "https://theclassictowers.com"
+      : "http://localhost:5173");
+
+  return `${frontendUrl.replace(/\/$/, "")}/login`;
+};
+
 const sendAccountApprovalEmail = async (toEmail, userName, userEmail, userRole, creatorName, approvalToken) => {
   const backendUrl =
     NODE_ENV === "production"
@@ -99,7 +113,13 @@ const sendAccountApprovalEmail = async (toEmail, userName, userEmail, userRole, 
   }
 };
 
-const sendAccountApprovedUserEmail = async (toEmail, userName, userRole) => {
+const sendAccountApprovedUserEmail = async (
+  toEmail,
+  userName,
+  userRole,
+  loginUrl,
+) => {
+  const resolvedLoginUrl = getLoginUrl(loginUrl);
   const emailHtml = `
     <!doctype html>
     <html lang="en">
@@ -110,6 +130,10 @@ const sendAccountApprovedUserEmail = async (toEmail, userName, userRole) => {
           <p>Your account has been approved and created successfully.</p>
           <p><strong>Role:</strong> ${userRole}</p>
           <p>You can now log in to TheClassicTowers with your email and password.</p>
+          <p><strong>Login Page:</strong> <a href="${resolvedLoginUrl}" style="color: #0b70c2;">${resolvedLoginUrl}</a></p>
+          <p style="margin: 28px 0;">
+            <a href="${resolvedLoginUrl}" style="display: inline-block; background: #0b70c2; color: #ffffff; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: bold;">Login to TheClassicTowers</a>
+          </p>
           <p style="margin-bottom: 0;">Best Regards,<br />TheClassicTowers</p>
         </main>
       </body>
@@ -121,6 +145,22 @@ const sendAccountApprovedUserEmail = async (toEmail, userName, userRole) => {
     to: toEmail,
     subject: "Your TheClassicTowers account is ready",
     html: emailHtml,
+    text: [
+      "Welcome to TheClassicTowers",
+      "",
+      `Hi ${userName},`,
+      "",
+      "Your account has been approved and created successfully.",
+      "",
+      `Role: ${userRole}`,
+      "",
+      "You can now log in to TheClassicTowers with your email and password.",
+      "",
+      `Login Page: ${resolvedLoginUrl}`,
+      "",
+      "Best Regards,",
+      "TheClassicTowers",
+    ].join("\n"),
   };
 
   try {
