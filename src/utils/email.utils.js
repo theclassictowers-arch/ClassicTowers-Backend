@@ -69,8 +69,8 @@ const sendAccountApprovalEmail = async (toEmail, userName, userEmail, userRole, 
       ? "https://api.theclassictowers.com"
       : "http://localhost:5000";
 
-  const approveUrl = `${backendUrl}/api/v1/auth/approve-account?token=${approvalToken}&action=approve`;
-  const rejectUrl = `${backendUrl}/api/v1/auth/approve-account?token=${approvalToken}&action=reject`;
+  const approveUrl = `${backendUrl}/api/v1/approve-account?token=${approvalToken}&action=approve`;
+  const rejectUrl = `${backendUrl}/api/v1/approve-account?token=${approvalToken}&action=reject`;
 
   let emailHtml = readEmailTemplate("account-approval", "index.html")
     .replace("${userName}", userName)
@@ -100,3 +100,4 @@ const sendAccountApprovalEmail = async (toEmail, userName, userEmail, userRole, 
 };
 
 export { sendVerificationEmail, sendResetPasswordEmail, sendVerificationNotification, sendAccountApprovalEmail };
+
