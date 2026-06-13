@@ -608,17 +608,7 @@ export const SettingsPage: React.FC = () => {
             }
           }}
         >
-          <Box
-            sx={{ position: "relative", mb: 1.5 }}
-          >
-            <Button
-              size="small"
-              startIcon={<ArrowBackIcon fontSize="small" />}
-              onClick={() => navigate(-1)}
-              sx={{ position: "absolute", left: 0, top: 0 }}
-            >
-              Back
-            </Button>
+          <Box sx={{ mb: 1.5 }}>
             <Typography variant="h5" gutterBottom sx={formStyles.title}>
               Settings
             </Typography>
@@ -1232,20 +1222,30 @@ export const SettingsPage: React.FC = () => {
               )}
             </Stack>
           )}
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            fullWidth
-            sx={{
-              ...formStyles.submitButton,
-              mt: 2,
-              opacity: isSaving ? 0.6 : 1,
-            }}
-            disabled={isSaving}
-          >
-            {isSaving ? <CircularProgress size={24} color="inherit" /> : "Save"}
-          </Button>
+          <Box sx={{ display: "flex", gap: 1.5, mt: 2 }}>
+            <Button
+              variant="outlined"
+              startIcon={<ArrowBackIcon fontSize="small" />}
+              onClick={() => navigate(-1)}
+              sx={{ textTransform: "none", fontWeight: 600, borderRadius: 2 }}
+            >
+              Back
+            </Button>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              sx={{
+                ...formStyles.submitButton,
+                mt: 0,
+                px: 4,
+                opacity: isSaving ? 0.6 : 1,
+              }}
+              disabled={isSaving}
+            >
+              {isSaving ? <CircularProgress size={24} color="inherit" /> : "Save"}
+            </Button>
+          </Box>
           <ShowPageLogo />
         </Box>
       </Box>
