@@ -1,0 +1,17 @@
+node_modules/
+.claude/
+
+# Environment files - IMPORTANT!
+.env
+.env.*
+.env.local
+.env.*.local
+
+.env.example
+
+
+# Production env bhi ignore (sensitive keys)
+.env.production
+
+.env.example
+
