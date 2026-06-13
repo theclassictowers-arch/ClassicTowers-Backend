@@ -7,6 +7,7 @@ import {
   DialogContent,
   DialogTitle,
   FormControl,
+  IconButton,
   InputLabel,
   MenuItem,
   Select,
@@ -14,6 +15,7 @@ import {
   Tab,
   Tabs,
   TextField,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import ImageOutlinedIcon from "@mui/icons-material/ImageOutlined";
@@ -25,7 +27,7 @@ import ColorizeOutlinedIcon from "@mui/icons-material/ColorizeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import DevicesOutlinedIcon from "@mui/icons-material/DevicesOutlined";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
-import { alpha } from "@mui/material/styles";
+import { alpha, useTheme } from "@mui/material/styles";
 import { useNotification } from "@refinedev/core";
 import { useNavigate } from "react-router-dom";
 import {
@@ -119,6 +121,7 @@ const normalizeAppearanceMode = (value?: string | null): AppearanceMode =>
     : "device";
 
 export const SettingsPage: React.FC = () => {
+  const theme = useTheme();
   const { role } = useAuthContext();
   const {
     dashboardTheme,
@@ -1222,30 +1225,60 @@ export const SettingsPage: React.FC = () => {
               )}
             </Stack>
           )}
-          <Box sx={{ display: "flex", gap: 1.5, mt: 2 }}>
-            <Button
-              variant="outlined"
-              startIcon={<ArrowBackIcon fontSize="small" />}
-              onClick={() => navigate(-1)}
-              sx={{ textTransform: "none", fontWeight: 600, borderRadius: 2 }}
-            >
-              Back
-            </Button>
+          <Stack
+            direction="row"
+            alignItems="center"
+            gap={0.75}
+            sx={{
+              mt: 2,
+              px: 0.5,
+              py: 0.35,
+              border: `1px solid ${alpha(theme.palette.divider, 0.22)}`,
+              borderRadius: "8px",
+              backgroundColor: alpha(theme.palette.background.paper, 0.66),
+              backdropFilter: "blur(8px)",
+              width: "fit-content",
+            }}
+          >
+            <Tooltip title="Back">
+              <IconButton
+                size="small"
+                aria-label="Back"
+                onClick={() => navigate(-1)}
+                sx={{
+                  width: 30,
+                  height: 30,
+                  borderRadius: "7px",
+                  color: theme.palette.primary.main,
+                  border: `1px solid ${alpha(theme.palette.primary.main, 0.42)}`,
+                  backgroundColor: alpha(theme.palette.background.paper, 0.72),
+                  "&:hover": {
+                    backgroundColor: alpha(theme.palette.primary.main, 0.1),
+                  },
+                }}
+              >
+                <ArrowBackIcon fontSize="small" />
+              </IconButton>
+            </Tooltip>
             <Button
               type="submit"
               variant="contained"
               color="primary"
+              size="small"
+              disabled={isSaving}
               sx={{
-                ...formStyles.submitButton,
-                mt: 0,
-                px: 4,
+                height: 30,
+                minHeight: "30px !important",
+                px: "12px !important",
+                borderRadius: "7px",
+                textTransform: "none",
+                fontWeight: 700,
                 opacity: isSaving ? 0.6 : 1,
               }}
-              disabled={isSaving}
             >
-              {isSaving ? <CircularProgress size={24} color="inherit" /> : "Save"}
+              {isSaving ? <CircularProgress size={16} color="inherit" /> : "Save"}
             </Button>
-          </Box>
+          </Stack>
           <ShowPageLogo />
         </Box>
       </Box>
