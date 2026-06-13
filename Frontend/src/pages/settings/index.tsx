@@ -611,22 +611,21 @@ export const SettingsPage: React.FC = () => {
             }
           }}
         >
-          <Box sx={{ mb: 1.5 }}>
-            <Typography variant="h5" gutterBottom sx={formStyles.title}>
-              Settings
-            </Typography>
-          </Box>
-
           <Box
             sx={{
-              display: "grid",
-              gridTemplateColumns: role === "admin" ? "1fr" : "auto",
-              justifyContent: "center",
-              mb: 1,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              flexWrap: "nowrap",
+              gap: 1,
+              mb: 1.5,
             }}
           >
+            <Typography variant="h5" sx={{ ...formStyles.title, textAlign: "left", mb: 0 }}>
+              Settings
+            </Typography>
             {role === "admin" ? (
-              <FormControl fullWidth size="small" sx={{ maxWidth: 360 }}>
+              <FormControl size="small" sx={{ minWidth: 160, maxWidth: 220, flexShrink: 0 }}>
                 <InputLabel id="settings-target-label">Target</InputLabel>
                 <Select
                   labelId="settings-target-label"
@@ -646,7 +645,7 @@ export const SettingsPage: React.FC = () => {
                 </Select>
               </FormControl>
             ) : (
-              <Typography sx={{ textAlign: "center", color: "text.secondary" }}>
+              <Typography sx={{ color: "text.secondary", flexShrink: 0 }}>
                 My Account
               </Typography>
             )}
@@ -1238,6 +1237,8 @@ export const SettingsPage: React.FC = () => {
               backgroundColor: alpha(theme.palette.background.paper, 0.66),
               backdropFilter: "blur(8px)",
               width: "fit-content",
+              flexWrap: "nowrap",
+              flexShrink: 0,
             }}
           >
             <Tooltip title="Back">
