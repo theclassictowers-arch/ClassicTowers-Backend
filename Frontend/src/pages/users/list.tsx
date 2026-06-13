@@ -155,7 +155,7 @@ export const UserList = () => {
         {dataGridProps.loading ? (
           <TableSkeleton columns={columns.length} />
         ) : (
-          <Box sx={{ position: "relative" }}>
+          <Box>
             <DataGrid
             {...dataGridProps}
             rows={rows}
@@ -164,8 +164,6 @@ export const UserList = () => {
             autoHeight
             rowHeight={34}
             columnHeaderHeight={38}
-            // Professional Full Client-side Configuration
-            // Professional Uncontrolled Configuration for Instant Search
             filterModel={undefined}
             sortModel={undefined}
             paginationModel={undefined}
@@ -192,10 +190,14 @@ export const UserList = () => {
             }}
             getRowId={(row) => row._id}
             />
-            <TableBottomActions
-              createButton={canAddUsers ? <CreateButton /> : null}
-            />
-            <TableCenterLogo />
+            <Box sx={{ display: "flex", alignItems: "center", mt: 1, gap: 1 }}>
+              <TableBottomActions
+                createButton={canAddUsers ? <CreateButton /> : null}
+              />
+              <Box sx={{ flex: 1, display: "flex", justifyContent: "center" }}>
+                <TableCenterLogo />
+              </Box>
+            </Box>
           </Box>
         )}
       </List>

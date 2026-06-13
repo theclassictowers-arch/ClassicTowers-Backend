@@ -100,7 +100,7 @@ export const LimitsList = () => {
         {dataGridProps.loading ? (
           <TableSkeleton columns={columns.length} />
         ) : (
-          <Box sx={{ position: "relative" }}>
+          <Box>
             <DataGrid
             {...dataGridProps}
             rows={rows}
@@ -109,7 +109,6 @@ export const LimitsList = () => {
             autoHeight
             rowHeight={34}
             columnHeaderHeight={38}
-            // Professional Uncontrolled Configuration for Instant Search
             filterModel={undefined}
             sortModel={undefined}
             paginationModel={undefined}
@@ -134,10 +133,14 @@ export const LimitsList = () => {
             }}
             getRowId={(row) => row._id}
             />
-            <TableBottomActions
-              createButton={canEdit ? <CreateButton /> : null}
-            />
-            <TableCenterLogo />
+            <Box sx={{ display: "flex", alignItems: "center", mt: 1, gap: 1 }}>
+              <TableBottomActions
+                createButton={canEdit ? <CreateButton /> : null}
+              />
+              <Box sx={{ flex: 1, display: "flex", justifyContent: "center" }}>
+                <TableCenterLogo />
+              </Box>
+            </Box>
           </Box>
         )}
       </List>

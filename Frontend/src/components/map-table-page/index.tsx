@@ -133,16 +133,14 @@ export const TableBottomActions = ({
       alignItems="center"
       gap={0.75}
       sx={{
-        position: "absolute",
-        left: 8,
-        bottom: 8,
         px: 0.5,
         py: 0.35,
         border: `1px solid ${alpha(theme.palette.divider, 0.22)}`,
         borderRadius: "8px",
         backgroundColor: alpha(theme.palette.background.paper, 0.66),
         backdropFilter: "blur(8px)",
-        zIndex: 3,
+        width: "fit-content",
+        flexShrink: 0,
       }}
     >
       <Tooltip title="Back">
@@ -194,20 +192,16 @@ export const TableCenterLogo = () => {
   return (
     <Box
       sx={{
-        position: "absolute",
-        bottom: 8,
-        left: "50%",
-        transform: "translateX(-50%)",
         px: 0.75,
         py: 0.35,
         border: `1px solid ${alpha(theme.palette.divider, 0.22)}`,
         borderRadius: "8px",
         backgroundColor: alpha(theme.palette.background.paper, 0.66),
         backdropFilter: "blur(8px)",
-        zIndex: 3,
         display: "flex",
         alignItems: "center",
         pointerEvents: "none",
+        flexShrink: 0,
       }}
     >
       <Box
@@ -227,7 +221,7 @@ export const ShowPageLogo = () => {
       sx={{
         display: "flex",
         justifyContent: "center",
-        mt: 2,
+        mt: 3,
         mb: 0.5,
         px: 0.75,
         py: 0.35,
