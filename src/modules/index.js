@@ -5,3 +5,4 @@ export * from "./limits/limits.routes.js";
 export * from "./sensor/sensor.routes.js";
 export * from "./site/site.routes.js";
 export * from "./user/user.routes.js";
+export * from "./admin-crud/admin-crud.routes.js";
