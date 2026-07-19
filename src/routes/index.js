@@ -8,8 +8,6 @@ import {
   limitsRoutes,
   userRoutes,
   emailRoutes,
-  menuRoutes,
-  inventoryRoutes,
 } from "#modules/index.js";
 import { verifyAuthToken } from "#middleware/index.js";
 
@@ -28,7 +26,5 @@ v1Router.use("/sites", siteRoutes);
 v1Router.use("/sensors", sensorRoutes);
 v1Router.use("/limits", verifyAuthToken, limitsRoutes);
 v1Router.use("/users", verifyAuthToken, userRoutes);
-v1Router.use("/menus", verifyAuthToken, menuRoutes);
-v1Router.use("/inventory", verifyAuthToken, inventoryRoutes);
 
 export default rootRouter;
