@@ -265,9 +265,9 @@
                   }
                 },
                 "url": {
-                  "raw": "{{dev_url}}/site/add-site",
+                  "raw": "{{dev_url}}/sites",
                   "host": ["{{dev_url}}"],
-                  "path": ["site", "add-site"]
+                  "path": ["sites"]
                 }
               },
               "response": []
