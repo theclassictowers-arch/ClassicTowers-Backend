@@ -20,6 +20,8 @@ const vibrationSchema = new Schema(
     angle: { type: axisSchema, required: true },
     pitchAngle: { type: [Number], required: true },
     rollAngle: { type: [Number], required: true },
+    yawAngle: { type: [Number], required: true },
+    resonance: { type: [Number], required: true },
   },
   { _id: false },
 );

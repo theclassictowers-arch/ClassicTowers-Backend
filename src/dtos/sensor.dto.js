@@ -50,6 +50,14 @@ const vibrationDto = Joi.object({
   rollAngle: Joi.array().items(Joi.number()).messages({
     "any.required": "Roll angle data is required",
   }),
+
+  yawAngle: Joi.array().items(Joi.number()).messages({
+    "any.required": "Yaw angle data is required",
+  }),
+
+  resonance: Joi.array().items(Joi.number()).messages({
+    "any.required": "Resonance data is required",
+  }),
 });
 
 const windDto = Joi.object({

@@ -48,6 +48,8 @@ const LimitsSchema = new Schema(
     vibrationAngle: AxisSchema,
     vibrationPitchAngle: DirectionalSchema,
     vibrationRollAngle: DirectionalSchema,
+    vibrationYawAngle: DirectionalSchema,
+    vibrationResonance: DirectionalSchema,
     windSpeed: DirectionalSchema,
     windDirection: DirectionalSchema,
     windHumidity: DirectionalSchema,

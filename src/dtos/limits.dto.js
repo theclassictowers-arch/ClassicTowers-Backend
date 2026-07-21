@@ -62,6 +62,12 @@ export const limitsDto = Joi.object({
   vibrationRollAngle: directionalDto.required().messages({
     "any.required": "Vibration roll angle data is required",
   }),
+  vibrationYawAngle: directionalDto.required().messages({
+    "any.required": "Vibration yaw angle data is required",
+  }),
+  vibrationResonance: directionalDto.required().messages({
+    "any.required": "Vibration resonance data is required",
+  }),
   windSpeed: directionalDto.required().messages({
     "any.required": "Wind speed data is required",
   }),

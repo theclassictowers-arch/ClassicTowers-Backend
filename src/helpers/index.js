@@ -113,6 +113,8 @@ export const evaluateLimits = async (sensorsProperties) => {
     vibrationAngle,
     vibrationPitchAngle,
     vibrationRollAngle,
+    vibrationYawAngle,
+    vibrationResonance,
     windSpeed,
     windDirection,
     windHumidity,
@@ -142,6 +144,14 @@ export const evaluateLimits = async (sensorsProperties) => {
 
     vibrationRollAngle: getOverallStatus(
       evaluateSingleValueSensor(vibrationRollAngle, "vibrationRollAngle"),
+    ),
+
+    vibrationYawAngle: getOverallStatus(
+      evaluateSingleValueSensor(vibrationYawAngle, "vibrationYawAngle"),
+    ),
+
+    vibrationResonance: getOverallStatus(
+      evaluateSingleValueSensor(vibrationResonance, "vibrationResonance"),
     ),
 
     windSpeed: getOverallStatus(
@@ -243,6 +253,16 @@ export const defaultLimits = {
     yellow: { min: 5, max: 10 },
     red: { min: 10, max: 999999999999999 },
   },
+  vibrationYawAngle: {
+    green: { min: 0, max: 5 },
+    yellow: { min: 5, max: 10 },
+    red: { min: 10, max: 999999999999999 },
+  },
+  vibrationResonance: {
+    green: { min: 0, max: 5 },
+    yellow: { min: 5, max: 10 },
+    red: { min: 10, max: 999999999999999 },
+  },
   windSpeed: {
     green: { min: 0, max: 5 },
     yellow: { min: 5, max: 10 },
@@ -295,6 +315,12 @@ export const sequenceAndCollectSensorsData = (sensorsDataArr) => {
     ),
     vibrationRollAngle: timeStampedData.vibrationData.flatMap((data) =>
       extractWindData(data, "rollAngle"),
+    ),
+    vibrationYawAngle: timeStampedData.vibrationData.flatMap((data) =>
+      extractWindData(data, "yawAngle"),
+    ),
+    vibrationResonance: timeStampedData.vibrationData.flatMap((data) =>
+      extractWindData(data, "resonance"),
     ),
     windSpeed: timeStampedData.windData.flatMap((data) =>
       extractWindData(data, "speed"),

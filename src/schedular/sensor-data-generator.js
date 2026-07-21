@@ -21,6 +21,8 @@ export const generateSensorData = (type, coordinates) => {
       angle: generateAxisDataInGreen(config.angle),
       pitchAngle: generateInGreenDomain(config.pitchAngle),
       rollAngle: generateInGreenDomain(config.rollAngle),
+      yawAngle: generateInGreenDomain(config.yawAngle),
+      resonance: generateInGreenDomain(config.resonance),
     };
   }
 

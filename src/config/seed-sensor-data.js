@@ -64,7 +64,9 @@ const seedData = async () => {
           frequency: { x: [50], y: [50], z: [50] },
           angle: { x: [0.05], y: [0.05], z: [0.1] },
           pitchAngle: [0.2],
-          rollAngle: [0.3]
+          rollAngle: [0.3],
+          yawAngle: [0.15],
+          resonance: [0.4]
         },
         windSensor: {
           sensorId: "WIND-RIYADH-01",

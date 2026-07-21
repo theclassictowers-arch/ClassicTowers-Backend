@@ -25,6 +25,8 @@ export const CONFIG = {
     },
     pitchAngle: defaultLimits.vibrationPitchAngle.green,
     rollAngle: defaultLimits.vibrationRollAngle.green,
+    yawAngle: defaultLimits.vibrationYawAngle.green,
+    resonance: defaultLimits.vibrationResonance.green,
   },
   WIND: {
     direction: defaultLimits.windDirection.green,

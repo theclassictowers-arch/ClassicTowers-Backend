@@ -21,6 +21,14 @@ const sensorMapping = {
     sensorType: "vibrationSensor",
     sensorProperty: "rollAngle",
   },
+  vibrationYawAngle: {
+    sensorType: "vibrationSensor",
+    sensorProperty: "yawAngle",
+  },
+  vibrationResonance: {
+    sensorType: "vibrationSensor",
+    sensorProperty: "resonance",
+  },
   windSpeed: { sensorType: "windSensor", sensorProperty: "speed" },
   windDirection: { sensorType: "windSensor", sensorProperty: "direction" },
   windHumidity: { sensorType: "windSensor", sensorProperty: "humidity" },

@@ -22,6 +22,8 @@ const sensorStatusSchema = new Schema(
     vibrationFrequency: statusSchema,
     vibrationPitchAngle: statusSchema,
     vibrationRollAngle: statusSchema,
+    vibrationYawAngle: statusSchema,
+    vibrationResonance: statusSchema,
     windSpeed: statusSchema,
     windDirection: statusSchema,
     windHumidity: statusSchema,
