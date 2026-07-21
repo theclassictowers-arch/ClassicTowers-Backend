@@ -8,6 +8,7 @@
     "dev": "nodemon src/index.js",
     "start": "node src/index.js",
     "seed:trends": "node src/scripts/seed-trend-data.js",
+    "migrate:vibration-limits": "node src/scripts/backfill-vibration-limits.js",
     "format": "prettier --write \"./**/*.{js,jsx,html,yaml,env,md,json}\"",
     "lint": "eslint \"./**/*.js\""
   },

@@ -19,7 +19,8 @@ export const evaluateLimits = async (sensorsProperties) => {
       const axes = ["x", "y", "z"];
       for (const axis of axes) {
         const value = axis === "x" ? x : axis === "y" ? y : z;
-        const sensorLimits = limits[limitType][axis];
+        const sensorLimits =
+          limits[limitType]?.[axis] ?? defaultLimits[limitType][axis];
 
         if (
           value >= sensorLimits.green.min &&
@@ -61,7 +62,7 @@ export const evaluateLimits = async (sensorsProperties) => {
     const time = sensorData[0].time;
 
     return sensorData.map(({ value }) => {
-      const sensorLimits = limits[limitType];
+      const sensorLimits = limits[limitType] ?? defaultLimits[limitType];
 
       if (value >= sensorLimits.green.min && value <= sensorLimits.green.max) {
         return {
