@@ -39,7 +39,6 @@ const LimitsSchema = new Schema(
     coordinates: {
       type: [Number],
       required: true,
-      unique: true,
     },
     imei: { type: [Number], required: true, unique: true },
     vibrationSpeed: AxisSchema,
