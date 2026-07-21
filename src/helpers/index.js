@@ -12,6 +12,8 @@ export const evaluateLimits = async (sensorsProperties) => {
   }
 
   const evaluateThreeAxisSensor = (sensorData, limitType) => {
+    if (!sensorData.length) return [];
+
     const date = sensorData[0].date;
     const time = sensorData[0].time;
 
@@ -58,6 +60,8 @@ export const evaluateLimits = async (sensorsProperties) => {
   };
 
   const evaluateSingleValueSensor = (sensorData, limitType) => {
+    if (!sensorData.length) return [];
+
     const date = sensorData[0].date;
     const time = sensorData[0].time;
 
@@ -98,6 +102,8 @@ export const evaluateLimits = async (sensorsProperties) => {
   };
 
   const getOverallStatus = (statusArray) => {
+    if (!statusArray.length) return undefined;
+
     const dangerItem = statusArray.find((item) => item.status === "danger");
     if (dangerItem) return dangerItem;
 
@@ -293,6 +299,7 @@ export const sequenceAndCollectSensorsData = (sensorsDataArr) => {
     vibrationData: sensorsDataArr.map((data) =>
       timeStampData(data, "vibrationSensor"),
     ),
+    imuData: sensorsDataArr.map((data) => timeStampData(data, "IMUSensor")),
     windData: sensorsDataArr.map((data) => timeStampData(data, "windSensor")),
   };
 
@@ -311,18 +318,38 @@ export const sequenceAndCollectSensorsData = (sensorsDataArr) => {
     vibrationAngle: timeStampedData.vibrationData.flatMap((data) =>
       extractVibrationData(data, "angle"),
     ),
-    vibrationPitchAngle: timeStampedData.vibrationData.flatMap((data) =>
-      extractWindData(data, "pitchAngle"),
-    ),
-    vibrationRollAngle: timeStampedData.vibrationData.flatMap((data) =>
-      extractWindData(data, "rollAngle"),
-    ),
-    vibrationYawAngle: timeStampedData.vibrationData.flatMap((data) =>
-      extractWindData(data, "yawAngle"),
-    ),
-    vibrationResonance: timeStampedData.vibrationData.flatMap((data) =>
-      extractWindData(data, "resonance"),
-    ),
+    vibrationPitchAngle: [
+      ...timeStampedData.vibrationData.flatMap((data) =>
+        extractWindData(data, "pitchAngle"),
+      ),
+      ...timeStampedData.imuData.flatMap((data) =>
+        extractWindData(data, "pitchAngle"),
+      ),
+    ],
+    vibrationRollAngle: [
+      ...timeStampedData.vibrationData.flatMap((data) =>
+        extractWindData(data, "rollAngle"),
+      ),
+      ...timeStampedData.imuData.flatMap((data) =>
+        extractWindData(data, "rollAngle"),
+      ),
+    ],
+    vibrationYawAngle: [
+      ...timeStampedData.vibrationData.flatMap((data) =>
+        extractWindData(data, "yawAngle"),
+      ),
+      ...timeStampedData.imuData.flatMap((data) =>
+        extractWindData(data, "yawAngle"),
+      ),
+    ],
+    vibrationResonance: [
+      ...timeStampedData.vibrationData.flatMap((data) =>
+        extractWindData(data, "resonance"),
+      ),
+      ...timeStampedData.imuData.flatMap((data) =>
+        extractWindData(data, "resonance"),
+      ),
+    ],
     windSpeed: timeStampedData.windData.flatMap((data) =>
       extractWindData(data, "speed"),
     ),

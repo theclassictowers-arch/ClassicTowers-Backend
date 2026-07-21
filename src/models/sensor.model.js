@@ -26,6 +26,16 @@ const vibrationSchema = new Schema(
   { _id: false },
 );
 
+const imuSchema = new Schema(
+  {
+    pitchAngle: { type: [Number], required: true },
+    rollAngle: { type: [Number], required: true },
+    yawAngle: { type: [Number], required: true },
+    resonance: { type: [Number], required: true },
+  },
+  { _id: false },
+);
+
 const windSchema = new Schema(
   {
     sensorId: { type: String, required: true },
@@ -41,7 +51,8 @@ const sensorsDataSchema = new Schema(
   {
     coordinates: { type: [Number], required: true },
     imei: { type: [Number], required: true },
-    vibrationSensor: { type: vibrationSchema, required: true },
+    vibrationSensor: { type: vibrationSchema, required: false },
+    IMUSensor: { type: imuSchema, required: false },
     windSensor: { type: windSchema, required: true },
   },
   { timestamps: true },

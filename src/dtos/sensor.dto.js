@@ -60,6 +60,24 @@ const vibrationDto = Joi.object({
   }),
 });
 
+const imuDto = Joi.object({
+  pitchAngle: Joi.array().items(Joi.number()).messages({
+    "array.base": "Pitch angle must be an array of numbers",
+  }),
+
+  rollAngle: Joi.array().items(Joi.number()).messages({
+    "array.base": "Roll angle must be an array of numbers",
+  }),
+
+  yawAngle: Joi.array().items(Joi.number()).messages({
+    "array.base": "Yaw angle must be an array of numbers",
+  }),
+
+  resonance: Joi.array().items(Joi.number()).messages({
+    "array.base": "Resonance must be an array of numbers",
+  }),
+});
+
 const windDto = Joi.object({
   sensorId: Joi.string().required().messages({
     "string.base": "Sensor ID must be a string",
@@ -110,9 +128,8 @@ export const sensorDto = Joi.object({
   }),
   region: Joi.string().allow("").optional(),
   infrastructure_id: Joi.string().allow("").optional(),
-  vibrationSensor: vibrationDto.required().messages({
-    "any.required": "Vibration sensor data is required",
-  }),
+  vibrationSensor: vibrationDto.optional(),
+  IMUSensor: imuDto.optional(),
   windSensor: windDto.required().messages({
     "any.required": "Wind sensor data is required",
   }),
