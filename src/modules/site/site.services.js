@@ -131,9 +131,6 @@ const siteService = {
     }
 
     const sensorStatus = await read.siteCurrentStatus();
-    if (!sensorStatus.length) {
-      throw createError(404, "No current sensor status found");
-    }
 
     const sitesWithStatus = sites.map((site) => {
       const status = sensorStatus.find(
@@ -172,9 +169,6 @@ const siteService = {
     }
 
     const sensorStatus = await read.siteCurrentStatus();
-    if (!sensorStatus.length) {
-      throw createError(404, "No current sensor status found");
-    }
 
     const status = sensorStatus.find(
       (status) =>
