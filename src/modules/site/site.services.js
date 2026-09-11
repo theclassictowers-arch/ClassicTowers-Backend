@@ -36,6 +36,7 @@ const siteService = {
 
     let operation = "updated";
     let siteName = existingSite?.display_name || "Unknown";
+    let createdNewSite = false;
 
     if (!Boolean(existingSite)) {
       let organization = null;
@@ -79,17 +80,23 @@ const siteService = {
         ...defaultLimits,
       };
 
-      const result = await Promise.all([
-        save.site(siteData),
-        save.limits(limitsData),
-      ]);
-
-      if (!result[0] || !result[1]) {
-        await Promise.all([remove.siteByImei(imei), remove.limitsByImei(imei)]);
-        throw createError(500, "Failed to save site data");
+      let savedSite;
+      try {
+        savedSite = await save.site(siteData);
+        const savedLimits = await save.limits(limitsData);
+        if (!savedSite || !savedLimits) {
+          throw createError(500, "Failed to save site configuration");
+        }
+      } catch (error) {
+        await Promise.allSettled([
+          remove.siteByImei(imei),
+          remove.limitsByImei(imei),
+        ]);
+        throw error;
       }
 
-      siteName = result[0].display_name || siteData.display_name || siteName;
+      siteName = savedSite.display_name || siteData.display_name || siteName;
+      createdNewSite = true;
       operation = "added";
     }
 
@@ -99,14 +106,30 @@ const siteService = {
     const sensorsProperties = sequenceAndCollectSensorsData(sensorsDataArr);
     const sensorsStatus = await evaluateLimits(sensorsProperties);
 
-    await Promise.all([
-      redisClient.del("sites:all"),
-      currentUser?.id ? redisClient.del(`sites:all:${currentUser.id}`) : Promise.resolve(),
-      redisClient.del(`site:${existingSite && existingSite._id}`),
-      save.sensor(sensorsData),
-      save.sensorStatus(sensorsData.coordinates, sensorsStatus),
-      save.archives(sensorsData.coordinates, siteName, sensorsStatus),
-    ]);
+    try {
+      await Promise.all([
+        redisClient.del("sites:all"),
+        currentUser?.id ? redisClient.del(`sites:all:${currentUser.id}`) : Promise.resolve(),
+        existingSite?._id
+          ? redisClient.del(`site:${existingSite._id}`)
+          : Promise.resolve(),
+        save.sensor(sensorsData),
+        save.sensorStatus(sensorsData.coordinates, sensorsStatus),
+        save.archives(sensorsData.coordinates, siteName, sensorsStatus),
+      ]);
+    } catch (error) {
+      if (createdNewSite) {
+        await Promise.allSettled([
+          remove.siteByImei(imei),
+          remove.limitsByImei(imei),
+          remove.sensorByCoordinates(sensorsData.coordinates),
+          remove.currentSensorStatusByCoordinates(sensorsData.coordinates),
+          remove.archiveByCoordinates(sensorsData.coordinates),
+          redisClient.del("sites:all"),
+        ]);
+      }
+      throw error;
+    }
 
     getWebSocketInstance().emit("newData", "New data added");
 
